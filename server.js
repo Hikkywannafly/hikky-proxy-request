@@ -49,21 +49,31 @@ const composeQuery = (originalQuery) => {
 };
 
 const handleProxy = async (req, res) => {
-    const { url, src } = req.query;
-    const options = {
-        responseType: 'stream',
-        headers: {
-            referer: url,
-        },
+
+    try {
+        const { url, src } = req.query;
+        const options = {
+            responseType: 'stream',
+            headers: {
+                referer: url,
+            },
+        }
+
+        const response = await axios.get(src, options);
+
+        response.data.pipe(res);
+    }
+    catch (error) {
+        console.log(error);
     }
 
-    const response = await axios.get(src, options);
-
-    response.data.pipe(res);
 
 };
 app.get("/proxy", handleProxy);
 
+app.get("/test", (req, res) => {
+    res.send("working fine");
+});
 
 app.listen(port, () => {
     console.log(`running  on port ${port}!`);
