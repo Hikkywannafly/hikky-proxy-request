@@ -1,7 +1,8 @@
 import express from "express";
 import axios from "axios";
 const app = express();
-const port = 3002;
+
+const PORT = process.env.PORT || 3002;
 
 const composeQuery = (originalQuery) => {
     let query = originalQuery;
@@ -75,6 +76,6 @@ app.get("/test", (req, res) => {
     res.send("working fine");
 });
 
-app.listen(port, () => {
-    console.log(`running  on port ${port}!`);
+app.listen(PORT, () => {
+    console.log(`running  on port ${PORT}!`);
 });
